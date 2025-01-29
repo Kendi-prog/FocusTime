@@ -1,23 +1,38 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text} from "react-native";
+import { View, StyleSheet, Text, Vibration} from "react-native";
 import { ProgressBar } from "react-native-paper";
 
 import { Countdown } from "../components/countDown";
 import { RoundedButton } from "../components/roundedButton";
+import { Timing } from "./timing";
 import { spacing } from "../utils/sizes";
 import { colors } from "../utils/colors";
 
-export const Timer = ({ focusSubject }) => {
+
+const ONE_SECOND_IN_MS = 1000;
+
+  const PATTERN = [
+    1 * ONE_SECOND_IN_MS,
+    1 * ONE_SECOND_IN_MS,
+    1 * ONE_SECOND_IN_MS,
+    1 * ONE_SECOND_IN_MS,
+    1 * ONE_SECOND_IN_MS,
+  ];
+
+
+export const Timer = ({ focusSubject, clearSubject }) => {
     const [isStarted, setIsStarted] = useState(false);
     const [progress, setProgress] = useState(1);
+    const [minutes, setMinutes] = useState(0.1);
 
     return (
         <View style={styles.container}>
             <View style={styles.countdown}>
                 <Countdown 
+                minutes={minutes}
                 isPaused={!isStarted}
                 onProgress={setProgress}
-                onEnd={() => {}}/>
+                onEnd={() => Vibration.vibrate(PATTERN)}/>
 
                 <View style={{ paddingTop: spacing.xxl}}>
                     <Text style={styles.title}>Focusing on:</Text>
@@ -33,6 +48,10 @@ export const Timer = ({ focusSubject }) => {
                     style={{ height: spacing.sm }}
                 />
             </View>
+
+            <View style={styles.timingWrapper}>
+                <Timing  onChangeTime={setMinutes}/>
+            </View>
             
             <View style={styles.buttonWrapper}>
                 {!isStarted ? (
@@ -41,8 +60,12 @@ export const Timer = ({ focusSubject }) => {
                     <RoundedButton title='pause' onPress={() => setIsStarted(false)}/>
                 )}
                 
-                
             </View>
+
+            <View style={styles.clearSubjectWrapper}>
+                <RoundedButton size={50} title='-' onPress={clearSubject}/>
+            </View>
+        
         </View>
     );
 }
@@ -56,12 +79,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    timingWrapper: {
+        flex: 0.1,
+        paddingTop: spacing.xxl,
+        flexDirection:'row'
+
+    },
     buttonWrapper: {
         flex: 0.3,
         flexDirection: 'row',
         padding: 15,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    clearSubjectWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
     title: {
         color: colors.white,
