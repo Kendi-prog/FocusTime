@@ -18,14 +18,14 @@ export default function App() {
       {!currentSubject ? (
         <>
           <Focus addSubject={setCurrentSubject}/>
-          <FocusHistory history={}/>
+          <FocusHistory history={history}/>
         </>
       ) :
       (
         <View>
           <Timer 
           focusSubject={currentSubject}
-          onTimerEnd={() => {}}
+          onTimerEnd={(subject) => {setHistory([...history, subject])}}
           clearSubject={() => setCurrentSubject(null)}/>
         </View>
       )}
