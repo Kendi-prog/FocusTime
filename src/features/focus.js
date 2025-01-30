@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 
 import { colors } from '../utils/colors';
@@ -16,10 +16,12 @@ export const Focus = ({ addSubject }) => {
                 style={styles.textInput} 
                 label='What would you like to focus on?'
                 onChangeText={setSubject}/>
+
+                <View style={styles.button}>
+                    <RoundedButton title='+' size={50} onPress={() => addSubject(subject)} />
+                </View>
             </View>
-            <View style={styles.button}>
-                <RoundedButton title='+' size={50} onPress={() => addSubject(subject)} />
-            </View>
+            
         </View>
     );
 }
@@ -36,7 +38,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     inputContainer: {
-        padding: spacing.lg,
+        paddingTop: spacing.xxxl,
+        paddingRight: spacing.md,
+        paddingLeft: spacing.sm,
         justifyContent: 'top',
         flexDirection: 'row',
     },

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, Vibration} from "react-native";
+import { View, StyleSheet, Text, Vibration } from "react-native";
 import { ProgressBar } from "react-native-paper";
 import { useKeepAwake } from "expo-keep-awake";
 
@@ -8,6 +8,7 @@ import { RoundedButton } from "../components/roundedButton";
 import { Timing } from "./timing";
 import { spacing } from "../utils/sizes";
 import { colors } from "../utils/colors";
+
 
 
 const ONE_SECOND_IN_MS = 1000;
@@ -43,16 +44,16 @@ export const Timer = ({ focusSubject, clearSubject, onTimerEnd }) => {
                 minutes={minutes}
                 isPaused={!isStarted}
                 onProgress={setProgress}
-                onEnd={onEnd }/>
+                onEnd={onEnd }
+                />
 
-                <View style={{ paddingTop: spacing.xxl}}>
+                <View style={{ paddingTop: spacing.xl }}>
                     <Text style={styles.title}>Focusing on:</Text>
                     <Text style={styles.task}>{ focusSubject }</Text>
                 </View>
-
             </View>
 
-            <View style={{ paddingTop: spacing.sm}}>
+            <View style={{ paddingTop: spacing.xxl}}>
                 <ProgressBar
                     progress={progress}
                     color={colors.progressBar }
@@ -79,16 +80,23 @@ export const Timer = ({ focusSubject, clearSubject, onTimerEnd }) => {
         
         </View>
     );
+
+    
 }
+
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 100,
+       
     },
     countdown: {
-        flex: 0.5,
         alignItems: 'center',
         justifyContent: 'center',
+        padding: spacing.md
+       
     },
     timingWrapper: {
         flex: 0.1,
@@ -99,13 +107,15 @@ const styles = StyleSheet.create({
     buttonWrapper: {
         flex: 0.3,
         flexDirection: 'row',
-        padding: 15,
+        paddingTop: 200,
         justifyContent: 'center',
         alignItems: 'center',
     },
     clearSubjectWrapper: {
         flexDirection: 'row',
         justifyContent: 'center',
+        padding: 100
+        
     },
     title: {
         color: colors.white,
